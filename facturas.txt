@@ -1,0 +1,9 @@
+Cliente: jon
+Productos:
+Alimento para cachorros
+Cantidad de productos: 2
+Subtotal: 32000
+IVA: 4160.0
+Descuento: 3200.0
+Total a pagar: 32960.0
+---------------------------------
