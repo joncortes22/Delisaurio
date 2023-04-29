@@ -1,68 +1,69 @@
-import os
+
 #Inicio sesion
 
-def creacion():
-    global usuario1, usuario2, contra1, contra2
-    usuario1 = "usuario1"
-    usuario2 = "usuario2"
-    contra1 = "contra1"
-    contra2 = "contra2"
-    
-    global medicos, duenos, mascotas, citas, productos, facturas, historial
-    medicos = []
-    duenos = []
-    mascotas = []
-    citas = []
-    productos = []
-    facturas = []
-    historial = []
+usuario1 = "usuario1"
+usuario2 = "usuario2"
+contra1 = "contra1"
+contra2 = "contra2"
 
-    global vacunas
-    vacunas = []    
-
-def login():
-    os.system('cls')
+def usuario(usuario1, usuario2):
+    print() 
     usuarioIngreso = input("Digite un Usuario: ")
     while usuarioIngreso != usuario1 and usuarioIngreso != usuario2:
         print("Usuario Invalido, Por favor ingrese un Usuario: ")
         usuarioIngreso = input("Ingrese el nombre de Usuario: ")
     print("Usuario valido")
 
-    #password
+def contraseña(contra1, contra2):
     contraseñaIngreso = input("Digite una contraseña: ")
     while contraseñaIngreso != contra1 and contraseñaIngreso != contra2:
         print("Contraseña Invalida, Por favor ingrese una Contraseña: ")
         contraseñaIngreso = input("Ingrese la Contraseña: ")
     print("Bienvenido")
 
-
+usuario(usuario1,usuario2)
+contraseña(contra1,contra2)
 
 def menu_principal():
-    os.system('clear' if os.name == 'posix' else 'cls')
-    opcion = input("""
-********************************************************
-Bienvenido a la veterinaria de Progra Básica
-         ****MENÚ PRINCIPAL****            
-1 - Módulo de registro
-2 - Módulo de Clínica
-3 - Módulo de Venta de Productos
-4 - Historial
-5 - Salir
 
-Opción: """)
-    match opcion:
-        case '1': modulo_registro()
-        case '2': modulo_clinica()
-        case '3': vender_productos()
-        case '4': modulo_historial()
-        case '5':
-            print("Gracias por utilizar nuestro programa!")
-            exit()
-        case _: menu_principal()
+    print("********************************************************")
+    print("\t Bienvenido a la veterinaria de Progra Básica.")
+    print("\t          ****MENÚ PRINCIPAL****            \t")
+    print()
+    print("\t1 - Módulo de registro")
+    print("\t2 - Módulo de Clínica")
+    print("\t3 - Módulo de Venta de Productos")
+    print("\t4 - Historial")
+    print("\t5 - Salir")
+    print()
+    print()
+    print("********************************************************")  
+    
+    while True:
+        opcion = input("Ingrese una opcion: ")
+        if opcion == "1":
+            modulo_registro()
+        elif opcion == "2":
+            modulo_clinica()
+        elif opcion == "3":
+            vender_productos()
+        elif opcion == "4":
+            modulo_historial()
+        elif opcion == "5":
+            print("Gracias por utilizar nuestro programa.")
+            break
+        else:
+            print("Opción inválida. Por favor, seleccione otra opción.")
 
 #Definición de variables
 
-
+medicos = []
+duenos = []
+mascotas = []
+citas = []
+productos = []
+facturas = []
+historial = []
 
 def modulo_registro():
     print()
@@ -166,6 +167,9 @@ def registrar_mascota():
     print("\nLa mascota ha sido registrada exitosamente.\n")
 
 
+citas = []
+vacunas = []
+ 
 def modulo_clinica():
     while True:
         print("\t\nBienvenido al módulo de clínica\n")
@@ -262,101 +266,130 @@ def modulo_clinica():
         else:
             print("\n***La opción ingresada no se encuentra dentro de las disponibles, por favor, inténtelo de nuevo.***")
 
-def write(nombre_cliente, productos_comprados, cant, total_pagar, impuesto, descuento, total):
-    if os.path.isfile("facturas.txt") == False: open("facturas.txt", "w+").close()
-    with open("facturas.txt", 'a') as f: #se abre el documento
-        f.write(f"Cliente: {nombre_cliente}\n")
-        f.write(f"Productos:\n")
-        for producto in productos_comprados:
-            f.write(f"{producto}\n")
-        f.write(f"Cantidad de productos: {cant}\n")
-        f.write(f"Subtotal: {total_pagar}\n")
-        f.write(f"IVA: {impuesto}\n")
-        f.write(f"Descuento: {descuento}\n")
-        f.write(f"Total a pagar: {total}\n")
-        f.write("---------------------------------\n")
-
-def transaccion(prod, cant):
-    productos=[16000,34000,20000,30000,30000,15000.5000,8000,10000,25000]
-    productos = [["Alimento para cachorros", 16000],["Alimento para adultos", 34000],
-                 ["Alimento para felinos", 20000],["Desparasitantes", 30000],
-                 ["Vacunas", 30000],["Shampoo para mascotas", 15000],
-                 ["Juguete para mascota", 5000],["Snacks para mascotas", 8000],
-                 ["Collares y accesorios", 10000],["Grooming para su mascota", 25000]]
-    compra = []
-    compra.append(productos[prod-1][0])
-    compra.append(productos[prod-1][1]*cant)
-    return compra
-
-def factura(nombre_cliente, productos_comprados, cant, total_pagar):
-    impuesto = total_pagar * 0.13
-    descuento = total_pagar * 0.10
-    total = impuesto + total_pagar - descuento
-    os.system('clear' if os.name == 'posix' else 'cls')
-    print("\t----- Factura -----")
-    print ()
-    print("\t-Cliente:",nombre_cliente)
-    print("\t-Productos comprados: ")
-    for producto in productos_comprados:
-        print("\t*",producto)
-    print("\t - Cantidad de productos:",cant)
-    print("\t - Subtotal: ¢",total_pagar)
-    print("\t - IVA:",impuesto)
-    print("\t - Descuento:",descuento)
-    print("\t - Total a pagar: ¢",total)
-    print("\t-------------------")
-    input("*presione enter para continuar*")
-    write(nombre_cliente, productos_comprados, cant, total_pagar, impuesto, descuento, total)
-
 def vender_productos():
-    os.system('clear' if os.name == 'posix' else 'cls')
     nombre_cliente = input("Ingrese su nombre: ")
 
     total_pagar = 0
     productos_comprados = []
-    cantidad_productos = 0
+    cantidad_productos = []
+    descuento = 0
 
     while True:
-        os.system('clear' if os.name == 'posix' else 'cls')
-        opcion = int(input("""
-1-Alimento para chachorros ¢16.000
-2-Alimento para adultos ¢34.000
-3-Alimento para felinos ¢20.000
-4-Desparasitantes ¢30.000
-5-Vacunas ¢30.000
-6-Shampoo para mascotas ¢15.000
-7-Juguetes para mascota ¢5.000
-8-Snacks para mascotas ¢8.000
-9-Collares y accesorios ¢10.000
-10-Grooming para su mascota ¢25.000
----------
-11-Factura
-12-Salir
-
-Opcion: """))
-
-        if opcion > 0 and opcion < 11: cant = int(input("Cantidad que desea llevar: "))
-
-        match opcion:
-            case 1: compra = transaccion(1,cant)
-            case 2: compra = transaccion(2,cant)
-            case 3: compra = transaccion(3,cant)
-            case 4: compra = transaccion(4,cant)
-            case 5: compra = transaccion(5,cant)
-            case 6: compra = transaccion(6,cant)
-            case 7: compra = transaccion(7,cant)
-            case 8: compra = transaccion(8,cant)
-            case 9: compra = transaccion(9,cant)
-            case 10: compra = transaccion(10,cant)
-            case 11: 
-                compra = factura(nombre_cliente, productos_comprados, cantidad_productos, total_pagar)
-                vender_productos()
-            case 12: menu_principal()
-            case _: continue
+        print()
+        print("\tBienvenido a venta de productos")
+        print()
+        print("Contamos con los siguientes productos disponibles - " "\n(Por la compra de 3 o mas productos, se le aplica un 10% de descuento):")
+        print()
+        print("\t1 - Alimento para chachorros ¢16.000")
+        print("\t2 - Alimento para adultos ¢34.000")
+        print("\t3 - Alimento para felinos ¢20.000")
+        print("\t4 - Desparasitantes ¢30.000")
+        print("\t5 - Vacunas ¢30.000")
+        print("\t6 - Shampoo para mascotas ¢15.000")
+        print("\t7 - Juguetes para mascota ¢5.000")
+        print("\t8 - Snacks para mascotas ¢8.000")
+        print("\t9 - Collares y accesorios ¢10.000")
+        print("\t10 - Grooming para su mascota ¢25.000")
+        print("\t-----")
+        print("\t11 - Factura")
+        print("\t12 - Salir")
+        print ()
         
-        total_pagar += compra[1]
-        productos_comprados.append(compra[0])
-        cantidad_productos += cant
+        opcion = int(input("Digite la opción deseada: "))
+
+        if opcion == 1:
+            precio = 16000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Alimento para cachorros*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Alimento para cachorros")
+            cantidad_productos.append(cantidad)
+        elif opcion == 2:
+            precio = 34000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Alimento para adultos*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Alimento para adultos")
+            cantidad_productos.append(cantidad)
+        elif opcion == 3:
+            precio = 20000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Alimento para felinos*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Alimento para felinos")
+            cantidad_productos.append(cantidad)
+        elif opcion == 4:
+            precio = 30000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Desparasitante*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Desparasitantes")
+            cantidad_productos.append(cantidad)
+        elif opcion == 5:
+            precio = 30000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Vacunas*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Vacunas")
+            cantidad_productos.append(cantidad)
+        elif opcion == 6:
+            precio = 15000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Shampoo de mascotas*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Shampoo para mascotas")
+            cantidad_productos.append(cantidad)
+        elif opcion == 7:
+            precio = 5000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Juguete para mascota*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Juguete para mascota")
+            cantidad_productos.append(cantidad)
+        elif opcion == 8:
+            precio = 8000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Snack para mascotas*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Snacks para mascotas")
+            cantidad_productos.append(cantidad)
+        elif opcion == 9:
+            precio = 10000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Collares y accesorios*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Collares y accesorios")
+            cantidad_productos.append(cantidad)
+        elif opcion == 10:
+            precio = 25000
+            cantidad = int(input("Cuantos desea llevar?: "))
+            print("\n****Se ha agregado: *Grooming*\n")
+            total_pagar += precio * cantidad
+            productos_comprados.append("Grooming para su mascota")
+            cantidad_productos.append(cantidad)
+        elif opcion == 11:
+            impuesto = total_pagar * 0.13
+            descuento = total_pagar * 0.10
+            total = impuesto + total_pagar - descuento
+            
+            print("\t----- Factura -----")
+            print ()
+            print("\t-Cliente:",nombre_cliente)
+            print("\t-Productos comprados: ")
+            for producto in productos_comprados:
+                print("\t*",producto)
+            print("\t - Cantidad de productos:",cantidad_productos)
+            print("\t - Subtotal: ¢",total_pagar)
+            print("\t - IVA:",impuesto)
+            print("\t - Descuento:",descuento)
+            print("\t - Total a pagar: ¢",total)
+            print("\t-------------------")
+            print()
+       
+        elif opcion == 12:
+            menu_principal()
+        else:
+            print("La opción que seleccionó es inválida.")
 
 def modulo_historial():
     while True:
@@ -394,7 +427,11 @@ def ver_historial_paciente():
         print("No se encontraron registros para ese paciente.")
 
 #Llamada a la función para mostrar el menú
-creacion()
-login()
+        
 menu_principal()
-vender_productos()
+
+ 
+
+
+
+
