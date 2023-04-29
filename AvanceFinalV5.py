@@ -397,4 +397,3 @@ def ver_historial_paciente():
 creacion()
 login()
 menu_principal()
-vender_productos()
